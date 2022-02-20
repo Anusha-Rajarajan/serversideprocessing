@@ -28,55 +28,68 @@ area.html :
     
 </head>
 <style>
-    *{
-        box-sizing: border-box;
-        font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
-    }
-
-    body{
-    background-color: rgb(215, 233, 164);
-    }
-
+    body {
+  background-color: lightskyblue;
+}
     .container{
     width: 1080px;
-    height: 350px;
+    height: 440px;
     margin-top: 100px;
     margin-left: auto;
     margin-right: auto;
-    border-radius: 25px;
-    border: 10px solid rgb(151, 92, 117);
-    box-shadow: inset 0 0 15px rgb(202, 121, 155);
-    background-color:rgb(192, 120, 150);
-    }
-    h1{
+    border-width: 2px 2px 2px 2px;
+    border-style: solid;
+    box-shadow: 15px 15px 8px lightsteelblue;
+    
+}
+    .heading{
         text-align: center;
-        padding-top: 15px;
     }
-    .calculate{
-        padding-top: 10px;
-        padding-bottom: 10px;
-        padding-left: 10px;
-        padding-right:10px;
+    .element{
+        padding-top: 20px;
+        padding-bottom: 20px;
+        padding-left: 20px;
+        padding-right:20px;
         text-align: center;
         font-size: 20px;
+        background-color:lightpink;
+        
     }
+    .footer{
+        display: block;
+        width: 100%;
+        height: 35px;
+        background-color: violet;
+        color: black;
+        text-align: center;
+        padding-top: 7px;
+        font-size: large;
+        
+        }
 </style>
+
 <body>
+     
     <div class="container">
-        <h1>AREA OF A TRIANGLE</h1>
+        <div class="element", backgroung color="white">
+        <h1  class="heading">AREA OF A RECTANGLE</h1>
+        </div>
         <form method="POST">
             {% csrf_token %}
-            <div class="calculate"> 
-                Base:<input type="text" name="base" value={{b}}></input><br/>
+            <div class="element"> 
+                Length=<input type="text" name="length" value={{length}}></input><br/>
             </div>
-            <div class="calculate">
-                Height:<input type="text" name="height" value={{h}}></input><br/>
+            <div class="element">
+                Breadth=<input type="text" name="breadth" value={{breath}}></input><br/>
             </div>
-            <div class="calculate">
-                <input type="submit" value="Calculatearea"></input><br/>
+            <div class="element">
+                <input type="submit" value="AREA OF RECTANGLE"></input><br/>
             </div>
-            <div class="calculate">
-                Area:<input type="text" name="area" value={{area}}></input>
+            <div class="element">
+                Area=<input type="text" name="area" value={{area}}></input>
+            </div>
+            <div class="footer">
+                    Developed by Anusha R
             </div>
         </form>
     </div>
@@ -90,33 +103,49 @@ from django.shortcuts import render
 
 def areacalculation(request):
     context ={}
-    context["area"]='0'
-    context["b"]='0'
-    context["h"]='0'
+    context['area']="0"
+    context['l']="0"
+    context['b']="0"
     if request.method == 'POST':
-        
-        b=request.POST.get('base','0')
-        h=request.POST.get('height','0')
-        area=0.5*int(b)*int(h)
-        context['area'] = area
+        l= request.POST.get('length','0')
+        b=request.POST.get('breadth','0')
+        area=int(l)*int(b)
+        context['area']=area
+        context['l']=l
         context['b']=b
-        context['h']=h
-    return render(request,"mathapp/area.html",context)
+    return render(request,'mathapp/area.html',context)
+
 ~~~
 urls.py :
 ~~~
+"""calculations URL Configuration
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/3.1/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
 from django.contrib import admin
 from django.urls import path
 from mathapp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('areaoftriangle/',views.areacalculation,name="areaoftriangle"),
-    path('',views.areacalculation,name="areaoftriangleroot")
+    path('areaofrectaanglr/',views.areacalculation,name="areaofrectangle"),
+    path('',views.areacalculation,name="areaofrectangleroot")
 ]
+
 ~~~
 ## OUTPUT:
-![output](./ex09.png)
+![output](./ss.png)
 ## Result:
 A website to perform mathematical calculations in server side is created.
 
